@@ -204,7 +204,7 @@ function positionOrder(position) {
             currentOrder.push(j);
         }
     }
-    document.getElementById("mobileOrder").innerHTML = currentOrder.toString().replace(",", " ");
+    document.getElementById("mobileOrder").innerHTML = currentOrder.toString().replace(/,/g, " ");
 }
 
 let clickCounter = 1;
