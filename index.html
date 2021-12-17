@@ -70,7 +70,11 @@
     #mobileOrder {
         text-align: center;
         flex-basis: 10rem;
-        padding-top: 1rem;
+        padding-top: .9rem;
+        color: rgb(255,255,255,.25);
+    }
+    .highlight {
+        color: lightgray;
     }
 
     @media only screen and (max-width: 1000px) {
@@ -115,14 +119,8 @@
             position: relative;
             transition: left .5s;
         }
-        .row:nth-child(2) {
-            left: 0;
-        }
-        .row:nth-child(3) {
-            left: 100%;
-        }
-        .row:nth-child(4) {
-            left: 200%;
+        .row:nth-child(2), .row:nth-child(3), .row:nth-child(4) {
+            left: 0%;
         }
         .row:not(:nth-child(2), :nth-child(3), :nth-child(4)) {
             display: none;
@@ -164,7 +162,7 @@
                 <div class="row"><div class="order">3</div><label>Laji 2</label><p>Tuote ></p></div>
             </div>
             <div class="mobileButtons">
-                <button id="prev"><</button><p id="mobileOrder">1 2 3</p><button id="next">></button>
+                <button id="prev"><</button><p id="mobileOrder"><span class="highlight">1</span> 2 3</p><button id="next">></button>
             </div>
             <button id="showMore">+ Näytä lisää</button>
         </div>
@@ -185,27 +183,42 @@ document.getElementById("showMore").addEventListener("click", function() {
     }
 });
 
+const boxContainer = document.querySelector(".boxContainer");
+const boxes = boxContainer.getElementsByClassName("box");
+
 function positionRows(position) {
-    const boxContainer = document.querySelector(".boxContainer");
-    const boxes = boxContainer.getElementsByClassName("box");
     for (let i = 0; i < boxes.length; i++) {
         const rows = boxes[i].getElementsByClassName("row");
         rows[0].style.left = (position - 1) * 100 + "%";
         rows[1].style.left = (position - 1) * 100 + "%";
         rows[2].style.left = (position - 1) * 100 + "%";
     }
-};
+}
+
+function positionOrder(position) {
+    let currentOrder = [];
+    for (let j = 1; j < (boxes.length + 1); j++) {
+        if ((position * -1) + 2 == j) {
+            currentOrder.push("<span class='highlight'>" + j + "</span>"); 
+        } else {    
+            currentOrder.push(j);
+        }
+    }
+    document.getElementById("mobileOrder").innerHTML = currentOrder.toString().replace(",", " ");
+}
 
 let clickCounter = 1;
 
 document.getElementById("next").addEventListener("click", function() {
     if (clickCounter > -1) { clickCounter = clickCounter - 1 };
     positionRows(clickCounter);
+    positionOrder(clickCounter);
 });
 
 document.getElementById("prev").addEventListener("click", function() {
     if (clickCounter < 1) { clickCounter = clickCounter + 1 };
     positionRows(clickCounter);
+    positionOrder(clickCounter);
 });
 
 </script>
