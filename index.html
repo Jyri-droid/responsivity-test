@@ -189,16 +189,16 @@ const boxes = boxContainer.getElementsByClassName("box");
 function positionRows(position) {
     for (let i = 0; i < boxes.length; i++) {
         const rows = boxes[i].getElementsByClassName("row");
-        rows[0].style.left = (position - 1) * 100 + "%";
-        rows[1].style.left = (position - 1) * 100 + "%";
-        rows[2].style.left = (position - 1) * 100 + "%";
+        rows[0].style.left = (position * -1 - 1) * 100 + "%";
+        rows[1].style.left = (position * -1 - 1) * 100 + "%";
+        rows[2].style.left = (position * -1 - 1) * 100 + "%";
     }
 }
 
 function positionOrder(position) {
     let currentOrder = [];
     for (let j = 1; j < (boxes.length + 1); j++) {
-        if ((position * -1) + 2 == j) {
+        if (position + 2 == j) {
             currentOrder.push("<span class='highlight'>" + j + "</span>"); 
         } else {    
             currentOrder.push(j);
@@ -207,16 +207,16 @@ function positionOrder(position) {
     document.getElementById("mobileOrder").innerHTML = currentOrder.toString().replace(/,/g, " ");
 }
 
-let clickCounter = 1;
+let clickCounter = -1;
 
 document.getElementById("next").addEventListener("click", function() {
-    if (clickCounter > -1) { clickCounter = clickCounter - 1 };
+    if (clickCounter < 1) { clickCounter = clickCounter + 1 };
     positionRows(clickCounter);
     positionOrder(clickCounter);
 });
 
 document.getElementById("prev").addEventListener("click", function() {
-    if (clickCounter < 1) { clickCounter = clickCounter + 1 };
+    if (clickCounter > -1) { clickCounter = clickCounter - 1 };
     positionRows(clickCounter);
     positionOrder(clickCounter);
 });
