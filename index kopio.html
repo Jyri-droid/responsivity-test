@@ -61,9 +61,6 @@
     button:hover {
         cursor: pointer;
     }
-    button:disabled {
-        color: rgb(255,255,255,.25);
-    }
     .mobileButtons {
         display: none;
     }
@@ -165,7 +162,7 @@
                 <div class="row"><div class="order">3</div><label>Category 3</label><p>Item ></p></div>
             </div>
             <div class="mobileButtons">
-                <button id="prev" disabled><</button><p id="mobileOrder"><span class="highlight">&bull;</span> &bull; &bull;</p><button id="next">></button>
+                <button id="prev"><</button><p id="mobileOrder"><span class="highlight">1</span> 2 3</p><button id="next">></button>
             </div>
             <button id="showMore">+ Show more</button>
         </div>
@@ -189,7 +186,7 @@ document.getElementById("showMore").addEventListener("click", function() {
 const boxContainer = document.querySelector(".boxContainer");
 const boxes = boxContainer.getElementsByClassName("box");
 
-function moveRows(position) {
+function positionRows(position) {
     for (let i = 0; i < boxes.length; i++) {
         const rows = boxes[i].getElementsByClassName("row");
         rows[0].style.left = position * -1 * 100 + "%";
@@ -198,43 +195,30 @@ function moveRows(position) {
     }
 }
 
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
-let clickCounter = 0;
-
-function moveOrder(position) {
+function positionOrder(position) {
     let currentOrder = [];
     for (let j = 1; j < (boxes.length + 1); j++) {
         if (position + 1 == j) {
-            currentOrder.push("<span class='highlight'>&bull;</span>"); 
+            currentOrder.push("<span class='highlight'>" + j + "</span>"); 
         } else {    
-            currentOrder.push("&bull;");
+            currentOrder.push(j);
         }
     }
     document.getElementById("mobileOrder").innerHTML = currentOrder.toString().replace(/,/g, " ");
 }
 
-function disableFirstOrLast(position) {
-    if (position == 0) {
-        prev.disabled = true;
-    } else { prev.disabled = false; }
-    if (position == boxes.length - 1) {
-        next.disabled = true;
-    } else { next.disabled = false; }
-}
+let clickCounter = 0;
 
-next.addEventListener("click", function() {
+document.getElementById("next").addEventListener("click", function() {
     if (clickCounter < boxes.length - 1) { clickCounter = clickCounter + 1 };
-    moveRows(clickCounter);
-    moveOrder(clickCounter);
-    disableFirstOrLast(clickCounter);
+    positionRows(clickCounter);
+    positionOrder(clickCounter);
 });
 
-prev.addEventListener("click", function() {
+document.getElementById("prev").addEventListener("click", function() {
     if (clickCounter > 0) { clickCounter = clickCounter - 1 };
-    moveRows(clickCounter);
-    moveOrder(clickCounter);
-    disableFirstOrLast(clickCounter);
+    positionRows(clickCounter);
+    positionOrder(clickCounter);
 });
 
 </script>
