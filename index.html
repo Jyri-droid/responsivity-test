@@ -54,7 +54,6 @@
     }
     button {
         height: 3rem;
-        flex-basis: 100%;
         background-color: black;
         border-radius: 1.5rem;
         color: lightgray;
@@ -71,6 +70,10 @@
     button:not(.mobileButtons button) {
         margin-top: .5rem;
     }
+
+    .boxContainer > button {
+        flex: 1;
+    }
     #mobileOrder {
         text-align: center;
         flex-basis: 15rem;
@@ -84,8 +87,7 @@
     @media only screen and (max-width: 1000px) {
         .order {
             display: none;
-        }
-        
+        }     
     }
 
     @media only screen and (max-width: 800px) {
@@ -168,7 +170,7 @@
             <div class="mobileButtons">
                 <button id="prev" disabled><</button><p id="mobileOrder"><span class="highlight">&bull;</span> &bull; &bull;</p><button id="next">></button>
             </div>
-            <button id="showMore">+ Show more</button>
+            <button id="showMore">+ Show more</button><button id="showLess" hidden>- Show Less</button>
         </div>
     </div>
 </body>
@@ -176,23 +178,51 @@
 
 // DESKTOP
 
-document.getElementById("showMore").addEventListener("click", function() {
-    const allBoxes = document.getElementsByClassName("box");
-    for (let i = 0; i < allBoxes.length; i++) {
-        const orderCount = allBoxes[i].getElementsByClassName("order").length;
-        for (let j = 0; j < 3; j++) {
-            const nodeToCopy = allBoxes[i].querySelector(".row");
-            let newNode = nodeToCopy.cloneNode(true);
-            allBoxes[i].appendChild(newNode);
-            newNode.querySelector(".order").innerHTML = orderCount + 1 + j;
+const boxContainer = document.querySelector(".boxContainer");
+const more = document.getElementById("showMore");
+const less = document.getElementById("showLess");
+
+function setOrder() {
+    let boxes = boxContainer.getElementsByClassName("box");
+    let rowCount = boxes[0].getElementsByClassName("row").length;x
+    for (let i = 0; i < boxes.length; i++) {
+        const orders = boxes[i].getElementsByClassName("order");
+        for (let j = 0; j < rowCount; j++) {
+            orders[j].innerHTML = j + 1;
         }
     }
+}
+
+more.addEventListener("click", function() {
+    less.hidden = false;
+    let boxes = boxContainer.getElementsByClassName("box");
+    let rowCount = boxes[0].getElementsByClassName("row").length;
+    for (let i = 0; i < boxes.length; i++) {
+        for (let j = 0; j < 3; j++) {
+            const nodeToCopy = boxes[i].querySelector(".row");
+            let newNode = nodeToCopy.cloneNode(true);
+            boxes[i].appendChild(newNode);
+        }
+    }
+    setOrder()
+});
+
+less.addEventListener("click", function() {
+    let boxes = document.getElementsByClassName("box");
+    for (let i = 0; i < boxes.length; i++) {
+        for (let j = 0; j < 3; j++) {
+            const nodeToRemove = boxes[i].querySelector(".row");
+            boxes[i].removeChild(nodeToRemove);
+        }
+    }
+    let rowCount = boxes[0].getElementsByClassName("row").length;
+    if (rowCount == 3) { less.hidden = true; }
+    setOrder()
 });
 
 // MOBILE
 
-const boxContainer = document.querySelector(".boxContainer");
-const boxes = boxContainer.getElementsByClassName("box");
+let boxes = boxContainer.getElementsByClassName("box");
 
 function moveRows(position) {
     for (let i = 0; i < boxes.length; i++) {
