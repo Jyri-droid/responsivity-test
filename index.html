@@ -193,9 +193,9 @@ const boxes = boxContainer.getElementsByClassName("box");
 function moveRows(position) {
     for (let i = 0; i < boxes.length; i++) {
         const rows = boxes[i].getElementsByClassName("row");
-        rows[0].style.left = position * -1 * 100 + "%";
-        rows[1].style.left = position * -1 * 100 + "%";
-        rows[2].style.left = position * -1 * 100 + "%";
+        for (j of rows) {
+            j.style.left = position * -1 * 100 + "%";
+        }
     }
 }
 
