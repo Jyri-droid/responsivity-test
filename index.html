@@ -239,15 +239,15 @@ const next = document.getElementById("next");
 let clickCounter = 0;
 
 function moveOrder(position) {
-    let currentOrder = [];
+    const newOrder = [];
     for (let j = 1; j < (boxes.length + 1); j++) {
         if (position + 1 == j) {
-            currentOrder.push("<span class='highlight'>&bull;</span>"); 
+            newOrder.push("<span class='highlight'>&bull;</span>"); 
         } else {    
-            currentOrder.push("&bull;");
+            newOrder.push("&bull;");
         }
     }
-    document.getElementById("mobileOrder").innerHTML = currentOrder.toString().replace(/,/g, " ");
+    document.getElementById("mobileOrder").innerHTML = newOrder.toString().replace(/,/g, " ");
 }
 
 function disableFirstOrLast(position) {
