@@ -183,7 +183,7 @@ const boxContainer = document.querySelector(".boxContainer");
 const more = document.getElementById("showMore");
 const less = document.getElementById("showLess");
 
-function setOrder() {
+setOrder = () => {
     let boxes = boxContainer.getElementsByClassName("box");
     let rowCount = boxes[0].getElementsByClassName("row").length;
     for (let i = 0; i < boxes.length; i++) {
@@ -225,7 +225,7 @@ less.addEventListener("click", function() {
 
 let boxes = boxContainer.getElementsByClassName("box");
 
-function moveRows(position) {
+moveRows = (position) => {
     for (let i = 0; i < boxes.length; i++) {
         const rows = boxes[i].getElementsByClassName("row");
         for (j of rows) {
@@ -238,7 +238,7 @@ const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 let clickCounter = 0;
 
-function moveOrder(position) {
+moveOrder = (position) => {
     const newOrder = [];
     for (let j = 1; j < (boxes.length + 1); j++) {
         if (position + 1 == j) {
@@ -250,7 +250,7 @@ function moveOrder(position) {
     document.getElementById("mobileOrder").innerHTML = newOrder.toString().replace(/,/g, " ");
 }
 
-function disableFirstOrLast(position) {
+disableFirstOrLast = (position) =>  {
     if (position == 0) {
         prev.disabled = true;
     } else { prev.disabled = false; }
