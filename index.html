@@ -184,8 +184,8 @@ const more = document.getElementById("showMore");
 const less = document.getElementById("showLess");
 
 setOrder = () => {
-    let boxes = boxContainer.getElementsByClassName("box");
-    let rowCount = boxes[0].getElementsByClassName("row").length;
+    const boxes = boxContainer.getElementsByClassName("box");
+    const rowCount = boxes[0].getElementsByClassName("row").length;
     for (let i = 0; i < boxes.length; i++) {
         const orders = boxes[i].getElementsByClassName("order");
         for (let j = 0; j < rowCount; j++) {
@@ -196,12 +196,12 @@ setOrder = () => {
 
 more.addEventListener("click", function() {
     less.hidden = false;
-    let boxes = boxContainer.getElementsByClassName("box");
-    let rowCount = boxes[0].getElementsByClassName("row").length;
+    const boxes = boxContainer.getElementsByClassName("box");
+    const rowCount = boxes[0].getElementsByClassName("row").length;
     for (let i = 0; i < boxes.length; i++) {
         for (let j = 0; j < 3; j++) {
             const nodeToCopy = boxes[i].querySelector(".row");
-            let newNode = nodeToCopy.cloneNode(true);
+            const newNode = nodeToCopy.cloneNode(true);
             boxes[i].appendChild(newNode);
         }
     }
@@ -209,21 +209,21 @@ more.addEventListener("click", function() {
 });
 
 less.addEventListener("click", function() {
-    let boxes = document.getElementsByClassName("box");
+    const boxes = document.getElementsByClassName("box");
     for (let i = 0; i < boxes.length; i++) {
         for (let j = 0; j < 3; j++) {
             const nodeToRemove = boxes[i].querySelector(".row");
             boxes[i].removeChild(nodeToRemove);
         }
     }
-    let rowCount = boxes[0].getElementsByClassName("row").length;
+    const rowCount = boxes[0].getElementsByClassName("row").length;
     if (rowCount == 3) { less.hidden = true; }
     setOrder()
 });
 
 // MOBILE
 
-let boxes = boxContainer.getElementsByClassName("box");
+const boxes = boxContainer.getElementsByClassName("box");
 
 moveRows = (position) => {
     for (let i = 0; i < boxes.length; i++) {
